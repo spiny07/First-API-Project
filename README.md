@@ -1,9 +1,9 @@
->>Simple Product Management API
+🛒 Simple Product Management API
 
 This is a basic FastAPI project where you can create, update, delete, and fetch products.
 It also includes user registration and login with JWT authentication.
 
->>Built With
+🚀 Built With
 
 FastAPI
 
@@ -11,7 +11,7 @@ SQLAlchemy
 
 SQLite (for database)
 
->>Features
+📌 Features
 
 User signup & login
 
