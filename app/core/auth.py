@@ -6,12 +6,14 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.db.database import get_db
 from fastapi import Depends, HTTPException , status
+import os
+from dotenv import load_dotenv
 
+load_dotenv() 
 
-
-SECRET_KEY = "SUPER_SECRET_KEY_CHANGE_THIS"  # change later for environment
-ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 60
+SECRET_KEY = str(os.getenv("SECRET_KEY"))
+ALGORITHM = os.getenv("ALGORITHM", "HS256")
+ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", 60))
 
 
 def create_access_token(data: dict):
