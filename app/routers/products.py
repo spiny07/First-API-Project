@@ -6,7 +6,7 @@ from app.db.database import get_db
 from app.db.models import Product
 from app.schemas.product import ProductCreate, ProductResponse
 from app.core.auth import get_current_user
-from app.db.models import User
+
 
 
 router = APIRouter( prefix="/products", tags=["Products"])
