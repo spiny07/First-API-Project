@@ -3,9 +3,9 @@ import os
 from dotenv import load_dotenv
 load_dotenv() 
 
-DATABASE_URL = str(os.getenv("DATABASE_UR"))
+DATABASE_URL = os.getenv("DATABASE_URL")
 
-engine = create_async_engine(url=DATABASE_URL, echo=True)
+engine = create_async_engine(url=DATABASE_URL, echo=True)   # type: ignore
 
 SeccionLocal = async_sessionmaker(bind=engine, expire_on_commit=False)
 
