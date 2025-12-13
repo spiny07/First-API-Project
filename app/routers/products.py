@@ -41,8 +41,11 @@ async def get_products(
     db: AsyncSession = Depends(get_db),
     current_user = Depends(get_current_user)
 ):
-    stmt = select(Product).where(Product.user_id == current_user.id)
+    stmt = select(Product)
     
+    if current_user.role != "admin":
+        stmt = stmt.where(Product.user_id == current_user.id)
+
     if search:
         stmt = stmt.where(Product.name.ilike(f"%{search}%"))
 
