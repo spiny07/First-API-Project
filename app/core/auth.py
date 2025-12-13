@@ -5,7 +5,7 @@ from app.db.models import User
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.db.database import get_db
-from fastapi import Depends, HTTPException , status
+from fastapi import Depends, HTTPException 
 import os
 from dotenv import load_dotenv
 
@@ -50,3 +50,8 @@ async def get_current_user(
     except JWTError:
         raise HTTPException(status_code=401, detail="Invalid token or expired")
 
+def require_admin(current_user: User = Depends(get_current_user)):
+    if current_user.role != "admin":
+        raise HTTPException(status_code=403, detail="Admin access required")
+
+    return current_user
