@@ -1,12 +1,13 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import insert , select
+from sqlalchemy import  select
 from typing import List
 from app.db.database import get_db
 from app.db.models import Product
 from app.schemas.product import ProductCreate, ProductResponse
 from app.core.auth import get_current_user
-
+from app.core.auth import require_admin
+from app.db.models import User
 
 
 router = APIRouter( prefix="/products", tags=["Products"])
@@ -130,3 +131,23 @@ async def delete_product(
     await db.commit()
 
     return {"message": "Product deleted successfully"}
+
+    
+
+@router.delete("/admin/{product_id}")
+async def admin_delete_product(
+    product_id: int,
+    db: AsyncSession = Depends(get_db),
+    admin: User = Depends(require_admin),
+):
+    stmt = select(Product).where(Product.id == product_id)
+    result = await db.execute(stmt)
+    product = result.scalar_one_or_none()
+
+    if product is None:
+        raise HTTPException(status_code=404, detail="Product not found")
+
+    await db.delete(product)
+    await db.commit()
+
+    return {"message": "Product deleted by admin"}

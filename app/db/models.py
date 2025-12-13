@@ -20,5 +20,6 @@ class User(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     email: Mapped[str] = mapped_column(String, unique=True, index=True)
     password: Mapped[str] = mapped_column(String)
+    role: Mapped[str] = mapped_column(default="user")
 
     products = relationship("Product", back_populates="owner")
