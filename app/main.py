@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Depends
-from app.routers import products, users
+from app.routers import products, users, admin
 from app.db.database import engine
 from app.db.models import Base
 from app.core.auth import outh2_scheme
@@ -19,3 +19,4 @@ def debug_jwt(token: str = Depends(outh2_scheme)):
 
 app.include_router(products.router)
 app.include_router(users.router)
+app.include_router(admin.router)
